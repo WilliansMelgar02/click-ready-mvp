@@ -1,0 +1,58 @@
+.tablero-sprint { padding: 24px 0 48px; display: flex; flex-direction: column; gap: 20px; }
+.panel { background: var(--blanco); border: 1px solid var(--borde); border-radius: var(--radio); padding: 20px; box-shadow: var(--sombra); }
+.panel h2 { margin-bottom: 4px; }
+.panel > .tenue { margin-bottom: 14px; }
+.eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--verde); margin: 0 0 4px; }
+.objetivo { font-size: 1.2rem; font-weight: 600; margin: 4px 0 12px; max-width: 70ch; }
+.medicion { margin: 0; padding-left: 18px; color: var(--tenue); }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.tile { background: var(--blanco); border: 1px solid var(--borde); border-radius: var(--radio); padding: 14px 16px; }
+.tile__valor { font-size: 28px; font-weight: 800; line-height: 1.1; }
+.tile__etiqueta { font-size: 13px; color: var(--tenue); }
+
+.dos-columnas { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: start; }
+
+.kanban { display: grid; grid-template-columns: 1fr .7fr 2.4fr; gap: 12px; align-items: start; }
+.grupos { columns: 2 260px; column-gap: 8px; }
+.tarjeta--grupo { break-inside: avoid; }
+.subtareas { list-style: none; margin: 6px 0 2px; padding: 0; }
+.subtareas li { display: grid; grid-template-columns: 1fr auto auto; gap: 6px; align-items: center; padding: 3px 0; border-top: 1px dashed var(--borde); font-size: 12.5px; }
+.subtareas .avatar { width: 20px; height: 20px; font-size: 9px; }
+.columna { background: var(--fondo); border-radius: 10px; padding: 10px; }
+.columna h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--tenue); margin: 2px 4px 10px; display: flex; justify-content: space-between; }
+.tarjeta { background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; font-size: 13.5px; }
+.tarjeta__pie { display: flex; justify-content: space-between; color: var(--tenue); font-size: 12px; margin-top: 4px; }
+.etiqueta { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--verde-claro); color: var(--verde-oscuro); margin-right: 4px; }
+.etiqueta--s2 { background: #eef1f6; color: #3d4a63; }
+.avatar { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tinta); color: var(--blanco); font-size: 10px; font-weight: 700; }
+
+.tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--tenue); border-bottom: 1px solid var(--borde); padding: 8px 6px; }
+.tabla td { border-bottom: 1px solid var(--borde); padding: 8px 6px; vertical-align: top; }
+.tabla td.num, .tabla th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.barra { height: 8px; border-radius: 4px; background: var(--fondo); overflow: hidden; min-width: 80px; }
+.barra > span { display: block; height: 100%; background: var(--verde); border-radius: 0 4px 4px 0; }
+
+.grafico { position: relative; }
+.grafico svg { width: 100%; height: auto; display: block; overflow: visible; }
+.grafico .rejilla { stroke: var(--borde); stroke-width: 1; }
+.grafico .eje { fill: var(--tenue); font-size: 12px; }
+.grafico .ideal { fill: none; stroke: #9aa5a0; stroke-width: 2; stroke-dasharray: 5 5; }
+.grafico .real { fill: none; stroke: var(--verde); stroke-width: 2; }
+.grafico .punto { fill: var(--verde); stroke: var(--blanco); stroke-width: 2; }
+.grafico .guia { stroke: var(--tinta); stroke-width: 1; opacity: .25; }
+.leyenda { display: flex; gap: 18px; font-size: 13px; color: var(--tenue); margin: 0 0 8px; }
+.leyenda span::before { content: ""; display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--verde); vertical-align: middle; margin-right: 6px; }
+.leyenda .l-ideal::before { border-top: 2px dashed #9aa5a0; }
+.tooltip {
+  position: absolute; pointer-events: none; background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px;
+  padding: 8px 10px; font-size: 13px; box-shadow: var(--sombra); white-space: nowrap; transform: translate(-50%, -110%);
+}
+.tooltip strong { display: block; }
+details.tabla-datos { margin-top: 10px; font-size: 13px; }
+details.tabla-datos summary { cursor: pointer; color: var(--verde); }
+
+@media (max-width: 900px) {
+  .dos-columnas, .kanban { grid-template-columns: 1fr; }
+}

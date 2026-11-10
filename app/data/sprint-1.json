@@ -1,0 +1,71 @@
+{
+  "producto": "Click&Ready · Andes Market",
+  "productGoal": "Pilotear compra online con retiro en tienda y entrega programada en 3 locales de Santiago desde el 17-08-2026, un mes antes del peak de Fiestas Patrias.",
+  "sprint": {
+    "numero": 1,
+    "inicio": "2026-07-06",
+    "fin": "2026-07-17",
+    "feriados": ["2026-07-16"],
+    "diasHabiles": 9,
+    "objetivo": "Un cliente de las 3 tiendas piloto puede crear su cuenta, encontrar productos del catálogo real (1.500 SKUs vía ERP mock) y armar su carrito en staging, para validar la usabilidad con 5 operadores de tienda.",
+    "medicion": [
+      "≥ 4 de 5 operadores completan «crear cuenta, buscar 3 productos y dejarlos en el carrito» sin ayuda y en menos de 3 minutos",
+      "Búsqueda con filtros < 50 ms sobre 1.500 SKUs (prueba automatizada)",
+      "0 defectos críticos abiertos al cierre"
+    ]
+  },
+  "equipo": [
+    { "id": "PO", "nombre": "Mariela Contreras", "rol": "Product Owner", "cargo": "Gerente Comercial" },
+    { "id": "SM", "nombre": "Rodrigo Saavedra", "rol": "Scrum Master", "cargo": "Agile coach interno" },
+    { "id": "VM", "nombre": "Valentina Muñoz", "rol": "Developer", "cargo": "Frontend", "dias": 9 },
+    { "id": "DA", "nombre": "Diego Araya", "rol": "Developer", "cargo": "Backend", "dias": 9 },
+    { "id": "FP", "nombre": "Francisca Pizarro", "rol": "Developer", "cargo": "QA", "dias": 9 },
+    { "id": "TH", "nombre": "Tomás Herrera", "rol": "Developer", "cargo": "UX/UI", "dias": 8, "nota": "1 día en capacitación de accesibilidad (10-07)" },
+    { "id": "JR", "nombre": "Javier Riquelme", "rol": "Developer", "cargo": "DevOps", "dias": 9 }
+  ],
+  "capacidad": {
+    "horasFocoPorDia": 6,
+    "bruta": 264,
+    "refinamiento": 26,
+    "disponible": 238,
+    "planificada": 200,
+    "colchon": 38
+  },
+  "tareas": [
+    { "id": "T11.1", "pbi": "PBI-11", "titulo": "Acordar contrato erp-mock/v1 con TI (stock por tienda)", "resp": "DA", "horas": 6 },
+    { "id": "T11.2", "pbi": "PBI-11", "titulo": "Cliente ERP con validación de contrato y reintentos", "resp": "DA", "horas": 8 },
+    { "id": "T11.3", "pbi": "PBI-11", "titulo": "Generador del catálogo mock (1.500 SKUs × 3 tiendas)", "resp": "JR", "horas": 4 },
+    { "id": "T11.4", "pbi": "PBI-11", "titulo": "Pruebas de contrato del ERP", "resp": "FP", "horas": 4 },
+    { "id": "T01.1", "pbi": "PBI-01", "titulo": "Diseño UX de formularios de cuenta", "resp": "TH", "horas": 4 },
+    { "id": "T01.2", "pbi": "PBI-01", "titulo": "UI de registro e inicio de sesión", "resp": "VM", "horas": 12 },
+    { "id": "T01.3", "pbi": "PBI-01", "titulo": "Servicio Auth (PBKDF2, bloqueo por intentos)", "resp": "DA", "horas": 10 },
+    { "id": "T01.4", "pbi": "PBI-01", "titulo": "Recuperación de clave vía correo + buzón sandbox", "resp": "JR", "horas": 6 },
+    { "id": "T01.5", "pbi": "PBI-01", "titulo": "QA PBI-01 (unitarias y exploratorias)", "resp": "FP", "horas": 6 },
+    { "id": "T02.1", "pbi": "PBI-02", "titulo": "Diseño UX de resultados y filtros", "resp": "TH", "horas": 6 },
+    { "id": "T02.2", "pbi": "PBI-02", "titulo": "Búsqueda en frontend + autocompletar", "resp": "VM", "horas": 14 },
+    { "id": "T02.3", "pbi": "PBI-02", "titulo": "Motor de búsqueda (tildes, relevancia, facetas)", "resp": "DA", "horas": 10 },
+    { "id": "T02.4", "pbi": "PBI-02", "titulo": "Filtros por marca, precio y stock", "resp": "TH", "horas": 10 },
+    { "id": "T02.5", "pbi": "PBI-02", "titulo": "QA PBI-02", "resp": "FP", "horas": 8 },
+    { "id": "T03.1", "pbi": "PBI-03", "titulo": "Modelo del carrito y reglas de stock", "resp": "DA", "horas": 8 },
+    { "id": "T03.2", "pbi": "PBI-03", "titulo": "UI del carrito", "resp": "VM", "horas": 14 },
+    { "id": "T03.3", "pbi": "PBI-03", "titulo": "Totales con IVA incluido", "resp": "VM", "horas": 6 },
+    { "id": "T03.4", "pbi": "PBI-03", "titulo": "Persistencia por sesión y fusión del carrito invitado", "resp": "DA", "horas": 6 },
+    { "id": "T03.5", "pbi": "PBI-03", "titulo": "QA PBI-03", "resp": "FP", "horas": 8 },
+    { "id": "TD.1", "pbi": "DoD", "titulo": "Pipeline CI con umbral de cobertura ≥ 70 %", "resp": "JR", "horas": 8 },
+    { "id": "TD.2", "pbi": "DoD", "titulo": "Despliegue a staging + feature flags por entorno", "resp": "JR", "horas": 8 },
+    { "id": "TD.3", "pbi": "DoD", "titulo": "Plantilla de PR con checklist de la DoD", "resp": "JR", "horas": 2 },
+    { "id": "T12.1", "pbi": "PBI-12", "titulo": "Spike pasarela sandbox (timebox 10 h)", "resp": "JR", "horas": 10 },
+    { "id": "TV.1", "pbi": "Validación", "titulo": "Suite E2E del happy path (Playwright)", "resp": "FP", "horas": 8 },
+    { "id": "TV.2", "pbi": "Validación", "titulo": "Guion y sesión de usabilidad con Operaciones", "resp": "TH", "horas": 8 },
+    { "id": "TV.3", "pbi": "Validación", "titulo": "Ajustes responsive y accesibilidad", "resp": "TH", "horas": 6 }
+  ],
+  "burndown": {
+    "dias": ["Inicio", "Lun 6", "Mar 7", "Mié 8", "Jue 9", "Vie 10", "Lun 13", "Mar 14", "Mié 15", "Vie 17"],
+    "ideal": [200, 178, 156, 133, 111, 89, 67, 44, 22, 0],
+    "real": [200, 184, 170, 164, 146, 122, 96, 68, 30, 0],
+    "notas": {
+      "Mié 8": "Impedimento: la API mock de TI no exponía stock por tienda",
+      "Vie 17": "Sprint Review y Retrospective"
+    }
+  }
+}
