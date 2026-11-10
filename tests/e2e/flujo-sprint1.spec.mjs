@@ -70,18 +70,19 @@ test.describe('PBI-02 · búsqueda con autocompletar y filtros', () => {
 
     await buscador(page).fill('leche');
     await buscador(page).press('Enter');
-    const totalLeche = await page.locator('.producto').count();
-    expect(totalLeche).toBeGreaterThan(0);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('leche');
+    await expect(page.locator('.producto').first()).toBeVisible();
 
     await page.locator('label.casilla', { hasText: 'Cordillera' }).click();
     await expect(page).toHaveURL(/marcas=Cordillera/);
-    for (const marca of await page.locator('.producto__marca').allTextContents()) expect(marca).toBe('Cordillera');
+    const marcas = async () => [...new Set(await page.locator('.producto__marca').allTextContents())];
+    await expect.poll(marcas).toEqual(['Cordillera']);
 
     await page.getByLabel('Hasta').fill('1500');
     await page.getByRole('button', { name: 'Aplicar' }).click();
     await expect(page).toHaveURL(/max=1500/);
-    const precios = await page.locator('.producto__precio').allTextContents();
-    for (const precio of precios) expect(Number(precio.replace(/\D/g, ''))).toBeLessThanOrEqual(1500);
+    const precioMaximo = async () => Math.max(...(await page.locator('.producto__precio').allTextContents()).map((t) => Number(t.replace(/\D/g, ''))));
+    await expect.poll(precioMaximo).toBeLessThanOrEqual(1500);
   });
 
   test('filtra por categoría y avisa cuando no hay resultados', async ({ page }) => {
