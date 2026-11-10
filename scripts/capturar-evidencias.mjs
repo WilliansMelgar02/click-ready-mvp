@@ -83,11 +83,12 @@ await page.goto(`${BASE}/sprint.html`);
 await page.waitForSelector('.kanban');
 await capturar('tablero-sprint1', { completa: true });
 
+await page.locator('.dos-columnas').scrollIntoViewIfNeeded();
 const zona = await page.locator('#zona').boundingBox();
-await page.mouse.move(zona.x + zona.width * 0.33, zona.y + 100);
+await page.mouse.move(zona.x + zona.width * 0.72, zona.y + zona.height * 0.5);
 n += 1;
 await page.waitForTimeout(250);
-await page.locator('.dos-columnas').screenshot({ path: `${DESTINO}/${String(n).padStart(2, '0')}-burndown-capacidad.png` });
+await page.screenshot({ path: `${DESTINO}/${String(n).padStart(2, '0')}-burndown-capacidad.png`, clip: await page.locator('.dos-columnas').boundingBox() });
 console.log(`${DESTINO}/${String(n).padStart(2, '0')}-burndown-capacidad.png`);
 
 await navegador.close();
