@@ -3,7 +3,7 @@ import { agregar } from '../../dominio/carrito.js';
 import { pluralizar } from '../../dominio/formato.js';
 import { $, esc, vista, avisar } from '../dom.js';
 import { estado, guardarCarrito, tiendaActual } from '../contexto.js';
-import { tarjetaProducto, estadoVacio, paginacion } from '../componentes.js';
+import { tarjetaProducto, estadoVacio, paginacion, encabezadoPagina } from '../componentes.js';
 import { MENSAJES } from '../mensajes.js';
 import { navegar } from '../rutas.js';
 
@@ -107,15 +107,15 @@ export function vistaCatalogo(params) {
     <div class="catalogo">
       ${estado.flags.filtros ? panelFiltros(filtros, r.facetas) : ''}
       <section class="resultados" aria-labelledby="titulo-resultados">
-        <div class="resultados__cabecera">
-          <div>
-            <h1 id="titulo-resultados">${titulo}</h1>
-            <p class="tenue" id="total-resultados">${pluralizar(r.total, 'producto')} · retiro en ${esc(tiendaActual()?.comuna)}</p>
-          </div>
-          <label class="orden">Ordenar
+        ${encabezadoPagina({
+          id: 'titulo-resultados',
+          titulo,
+          idDetalle: 'total-resultados',
+          detalle: `${pluralizar(r.total, 'producto')} · retiro en ${esc(tiendaActual()?.comuna)}`,
+          acciones: `<label class="orden">Ordenar
             <select id="orden">${ORDENES.map(([valor, texto]) => `<option value="${valor}">${texto}</option>`).join('')}</select>
-          </label>
-        </div>
+          </label>`,
+        })}
         ${r.total
           ? `<div class="grilla">${r.items.map((p) => tarjetaProducto(p, estado.tienda)).join('')}</div>`
           : estadoVacio('No encontramos productos con esos criterios.', '<button class="btn btn--secundario" type="button" data-accion="ver-todo">Ver todo el catálogo</button>')}

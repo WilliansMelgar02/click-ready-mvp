@@ -2,7 +2,7 @@ import { actualizarCantidad, eliminar, totales, MAXIMO_POR_PRODUCTO } from '../.
 import { formatoCLP, pluralizar } from '../../dominio/formato.js';
 import { esc, vista, avisar } from '../dom.js';
 import { estado, guardarCarrito, tiendaActual, usuarioActual } from '../contexto.js';
-import { miniatura, estadoVacio } from '../componentes.js';
+import { miniatura, estadoVacio, encabezadoPagina } from '../componentes.js';
 import { MENSAJES } from '../mensajes.js';
 
 function lineaCarrito(l) {
@@ -46,15 +46,18 @@ function resumen(t) {
 export function vistaCarrito() {
   const t = totales(estado.carrito);
   vista().innerHTML = `
-    <div class="pagina-carrito">
+    <div class="pagina-carrito${t.lineas ? '' : ' pagina-carrito--vacia'}">
       <section aria-labelledby="titulo-carrito">
-        <h1 id="titulo-carrito">Tu carrito</h1>
-        <p class="tenue">Retiro en ${esc(tiendaActual()?.nombre)} · ${pluralizar(t.unidades, 'unidad', 'unidades')}</p>
+        ${encabezadoPagina({
+          id: 'titulo-carrito',
+          titulo: 'Tu carrito',
+          detalle: `Retiro en ${esc(tiendaActual()?.nombre)} · ${pluralizar(t.unidades, 'unidad', 'unidades')}`,
+        })}
         ${t.lineas
           ? `<ul class="lineas">${estado.carrito.lineas.map(lineaCarrito).join('')}</ul>`
           : estadoVacio('Tu carrito está vacío.', '<a class="btn btn--primario" href="#/">Ir al catálogo</a>')}
       </section>
-      ${resumen(t)}
+      ${t.lineas ? resumen(t) : ''}
     </div>`;
 
   const aplicar = (resultado, aviso) => {
