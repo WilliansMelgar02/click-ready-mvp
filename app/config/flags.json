@@ -1,0 +1,23 @@
+{
+  "comunes": {
+    "autocompletar": true,
+    "filtros": true
+  },
+  "entornos": {
+    "local": {
+      "buzonSandbox": true,
+      "checkout": false,
+      "franjasRetiro": false
+    },
+    "staging": {
+      "buzonSandbox": true,
+      "checkout": false,
+      "franjasRetiro": false
+    },
+    "produccion": {
+      "buzonSandbox": false,
+      "checkout": false,
+      "franjasRetiro": false
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "click-ready-mvp",
+  "version": "0.1.0",
+  "description": "Click&Ready para Andes Market: Incremento del Sprint 1 (registro/login, búsqueda y carrito).",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.8"
+  },
+  "scripts": {
+    "catalogo": "node scripts/generar-catalogo.mjs",
+    "start": "node scripts/servidor.mjs",
+    "test": "node --test --experimental-test-coverage --test-coverage-include=app/js/dominio/** --test-coverage-lines=70 --test-coverage-branches=70 --test-coverage-functions=70 \"tests/unit/*.test.mjs\"",
+    "test:ci": "node --test --experimental-test-coverage --test-coverage-include=app/js/dominio/** --test-coverage-lines=70 --test-coverage-branches=70 --test-coverage-functions=70 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=lcov.info \"tests/unit/*.test.mjs\"",
+    "test:e2e": "playwright test",
+    "evidencias": "node scripts/capturar-evidencias.mjs",
+    "build": "node scripts/construir.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}

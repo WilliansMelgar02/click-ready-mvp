@@ -1,0 +1,92 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unitarias:
+    name: Pruebas unitarias + cobertura ≥ 70 %
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Pruebas unitarias con umbral de cobertura
+        run: npm run test:ci | tee reporte-unitarias.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporte-unitarias
+          path: |
+            reporte-unitarias.txt
+            lcov.info
+
+  e2e:
+    name: Pruebas funcionales E2E (happy path)
+    runs-on: ubuntu-latest
+    needs: unitarias
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Playwright
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporte-e2e
+          path: playwright-report
+
+  desplegar-staging:
+    name: Desplegar a staging
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [unitarias, e2e]
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Construir con la variable de entorno APP_ENV
+        env:
+          APP_ENV: ${{ vars.APP_ENV || 'staging' }}
+          APP_VERSION: ${{ github.sha }}
+        run: node scripts/construir.mjs
+      - uses: actions/download-artifact@v4
+        with:
+          name: reporte-unitarias
+          path: dist/reportes/unitarias
+      - uses: actions/download-artifact@v4
+        with:
+          name: reporte-e2e
+          path: dist/reportes/e2e
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: despliegue
+        uses: actions/deploy-pages@v4
