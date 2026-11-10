@@ -4,16 +4,62 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Click&amp;Ready · Andes Market</title>
-  <style>
-    body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: #f5f7f6; color: #1d2b24; display: grid; place-items: center; min-height: 100vh; }
-    .marca { font-size: 28px; font-weight: 800; color: #0b7a4b; }
-    p { color: #5d6b64; }
-  </style>
+  <meta name="description" content="Compra online con retiro en tienda o entrega programada en Andes Market.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b7a4b'/%3E%3Cpath d='M9 17l5 5 9-11' stroke='white' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="config/entorno.js"></script>
+  <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <main>
-    <div class="marca">Click&amp;Ready</div>
-    <p>Andes Market · ambiente de staging en preparación para el Sprint 1.</p>
+  <a class="saltar" href="#vista">Saltar al contenido</a>
+
+  <div class="franja-entorno" id="franja-entorno" hidden></div>
+
+  <header class="cabecera">
+    <div class="cabecera__fila contenedor">
+      <a class="marca" href="#/" aria-label="Click&amp;Ready, ir al catálogo">
+        <span class="marca__logo" aria-hidden="true">CR</span>
+        <span class="marca__texto"><strong>Click&amp;Ready</strong><small>Andes Market</small></span>
+      </a>
+
+      <form class="buscador" id="buscador" role="search" autocomplete="off">
+        <label class="oculto" for="buscador-texto">Buscar productos</label>
+        <input id="buscador-texto" name="q" type="search" placeholder="Busca arroz, leche, detergente…"
+               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+        <button class="buscador__boton" type="submit" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="6.5"/>
+            <path d="m19.5 19.5-3.8-3.8"/>
+          </svg>
+        </button>
+        <ul class="sugerencias" id="sugerencias" role="listbox" hidden></ul>
+      </form>
+
+      <div class="cabecera__acciones">
+        <label class="selector-tienda">
+          <span>Retiro en</span>
+          <select id="selector-tienda" aria-label="Tienda de retiro"></select>
+        </label>
+        <div id="zona-usuario" class="zona-usuario"></div>
+        <a class="btn-carrito" href="#/carrito" aria-label="Ver carrito">
+          <span>Carrito</span>
+          <span class="insignia" id="insignia-carrito">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="vista" class="contenedor" tabindex="-1">
+    <p class="cargando">Cargando catálogo…</p>
   </main>
+
+  <footer class="pie">
+    <div class="contenedor pie__fila">
+      <span>Click&amp;Ready · MVP piloto en 3 tiendas de Santiago · Horario de retiro 10:00–19:00</span>
+      <span><a href="sprint.html">Tablero del Sprint 1</a> · <span id="pie-version"></span></span>
+    </div>
+  </footer>
+
+  <div class="avisos" id="avisos" role="status" aria-live="polite"></div>
 </body>
 </html>
