@@ -8,7 +8,7 @@
       "2026-07-16"
     ],
     "diasHabiles": 9,
-    "objetivo": "Un cliente de las 3 tiendas piloto puede crear su cuenta, encontrar productos del catálogo real (1.500 SKUs vía ERP mock) y armar su carrito en staging, para validar la usabilidad con 5 operadores de tienda.",
+    "objetivo": "Un cliente de las 3 tiendas piloto puede crear su cuenta, encontrar productos del catálogo completo (1.500 SKUs vía ERP mock) y armar su carrito en staging, para validar la usabilidad con 5 operadores de tienda.",
     "medicion": [
       "≥ 4 de 5 operadores completan «crear cuenta, buscar 3 productos y dejarlos en el carrito» sin ayuda y en menos de 3 minutos",
       "Búsqueda con filtros < 50 ms sobre 1.500 SKUs (prueba automatizada)",

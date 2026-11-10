@@ -16,7 +16,7 @@ Este repositorio contiene el **Incremento del Sprint 1** (6 al 17 de julio de 20
 
 ## Sprint Goal
 
-> Un cliente de las 3 tiendas piloto puede crear su cuenta, encontrar productos del catálogo real
+> Un cliente de las 3 tiendas piloto puede crear su cuenta, encontrar productos del catálogo completo
 > (1.500 SKUs vía ERP mock) y armar su carrito en staging, para validar la usabilidad con 5 operadores de tienda.
 
 | PBI | Historia de usuario | SP | Estado |
