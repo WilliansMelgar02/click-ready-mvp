@@ -22,6 +22,17 @@ export function tarjetaProducto(producto, tienda) {
     </article>`;
 }
 
+export function encabezadoPagina({ id, titulo, detalle, idDetalle = '', acciones = '' }) {
+  return `
+    <div class="encabezado-pagina">
+      <div class="encabezado-pagina__texto">
+        <h1 id="${id}">${titulo}</h1>
+        <p class="tenue"${idDetalle ? ` id="${idDetalle}"` : ''}>${detalle}</p>
+      </div>
+      ${acciones}
+    </div>`;
+}
+
 export function estadoVacio(texto, accion = '') {
   return `<div class="vacio"><p>${texto}</p>${accion}</div>`;
 }
