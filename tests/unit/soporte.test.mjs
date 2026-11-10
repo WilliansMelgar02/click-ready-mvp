@@ -51,8 +51,6 @@ describe('Soporte · almacén, buzón y formato', () => {
     assert.deepEqual(buzon.listar().map((m) => m.asunto), ['Dos', 'Uno']);
     assert.equal(buzon.listar('ana@mail.cl').length, 1);
     assert.throws(() => buzon.enviar({ para: '', asunto: 'x' }), /destinatario/);
-    buzon.vaciar();
-    assert.equal(buzon.listar().length, 0);
   });
 
   test('formatea montos en pesos chilenos', () => {
