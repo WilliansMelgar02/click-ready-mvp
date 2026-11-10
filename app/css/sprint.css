@@ -3,6 +3,7 @@
 .panel h2 { margin-bottom: 4px; }
 .panel > .tenue { margin-bottom: 14px; }
 .eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--verde); margin: 0 0 4px; }
+.product-goal { margin: 0 0 14px; color: var(--tenue); max-width: 80ch; }
 .objetivo { font-size: 1.2rem; font-weight: 600; margin: 4px 0 12px; max-width: 70ch; }
 .medicion { margin: 0; padding-left: 18px; color: var(--tenue); }
 

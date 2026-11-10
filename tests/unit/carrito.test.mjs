@@ -2,7 +2,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { crearAlmacen } from '../../app/js/dominio/almacen.js';
 import {
-  crearCarrito, agregar, actualizarCantidad, eliminar, vaciar, totales, crearRepositorioCarrito, ERRORES, MAXIMO_POR_PRODUCTO,
+  crearCarrito, agregar, actualizarCantidad, eliminar, totales, crearRepositorioCarrito, ERRORES, MAXIMO_POR_PRODUCTO,
 } from '../../app/js/dominio/carrito.js';
 
 const ARROZ = { sku: 'AM-000001', nombre: 'Arroz grado 1 1 kg', marca: 'Cordillera', precio: 1490, stock: { T01: 10 } };
@@ -55,11 +55,10 @@ describe('PBI-03 · editar y eliminar', () => {
     assert.deepEqual(r.carrito.lineas.map((l) => l.sku), [LECHE.sku]);
   });
 
-  test('elimina una línea y vacía el carrito', () => {
+  test('elimina una línea', () => {
     const r = eliminar(conProductos(), LECHE.sku);
     assert.deepEqual(r.carrito.lineas.map((l) => l.sku), [ARROZ.sku]);
     assert.equal(eliminar(r.carrito, LECHE.sku).error, ERRORES.NO_ESTA_EN_CARRITO);
-    assert.equal(vaciar(conProductos()).carrito.lineas.length, 0);
   });
 });
 

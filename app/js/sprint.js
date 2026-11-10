@@ -1,12 +1,8 @@
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = (s) => document.querySelector(s);
 
-const SIGUIENTE = [
-  ['PBI-04a', 'Pago del carrito en pasarela sandbox', 8],
-  ['PBI-14', 'Reserva de stock al confirmar el pago', 5],
-  ['PBI-05', 'Elegir franja de retiro (tope 20 pedidos/hora)', 8],
-  ['PBI-06', 'Correo de confirmación de pedido', 3],
-];
+const fecha = (iso) => new Date(`${iso}T12:00`).toLocaleDateString('es-CL');
+const diaMes = (iso) => `${iso.slice(8, 10)}-${iso.slice(5, 7)}`;
 
 function tile(valor, etiqueta) {
   return `<div class="tile"><div class="tile__valor">${valor}</div><div class="tile__etiqueta">${etiqueta}</div></div>`;
@@ -65,7 +61,7 @@ function activarTooltip({ dias, ideal, real, notas }) {
 
 async function iniciar() {
   const datos = await fetch('data/sprint-1.json', { cache: 'no-store' }).then((r) => r.json());
-  const { sprint, capacidad, equipo, tareas } = datos;
+  const { productGoal, sprint, capacidad, equipo, tareas, grupos: infoGrupos, siguienteSprint } = datos;
   const persona = Object.fromEntries(equipo.map((e) => [e.id, e]));
   const iniciales = (id) => persona[id].nombre.split(' ').map((p) => p[0]).join('');
 
@@ -75,15 +71,11 @@ async function iniciar() {
     return { ...e, bruta, asignadas, carga: asignadas / (bruta * 0.9) };
   });
 
-  const TITULOS = {
-    'PBI-11': ['Catálogo y stock desde el ERP mock', 5], 'PBI-01': ['Registro, inicio de sesión y recuperación', 5],
-    'PBI-02': ['Búsqueda con autocompletar y filtros', 8], 'PBI-03': ['Carrito con totales y persistencia', 8],
-    'PBI-12': ['Spike de pasarela sandbox', 3], DoD: ['Habilitadores de la DoD', null], 'Validación': ['Validación del Incremento', null],
-  };
+  const puntos = Object.values(infoGrupos).reduce((s, g) => s + (g.sp ?? 0), 0);
   const grupos = [...new Set(tareas.map((t) => t.pbi))];
   const hecho = grupos.map((g) => {
     const items = tareas.filter((t) => t.pbi === g);
-    const [titulo, sp] = TITULOS[g] ?? [g, null];
+    const { titulo, sp } = infoGrupos[g] ?? { titulo: g };
     return `<div class="tarjeta tarjeta--grupo"><span class="etiqueta">${esc(g)}</span><strong>${esc(titulo)}</strong>
       <ul class="subtareas">${items.map((t) => `<li><span>${esc(t.titulo)}</span><span class="tenue">${t.horas} h</span>
         <span class="avatar" title="${esc(persona[t.resp].nombre)}">${iniciales(t.resp)}</span></li>`).join('')}</ul>
@@ -92,7 +84,8 @@ async function iniciar() {
 
   $('#tablero').innerHTML = `
     <section class="panel">
-      <p class="eyebrow">Sprint ${sprint.numero} · ${new Date(`${sprint.inicio}T12:00`).toLocaleDateString('es-CL')} al ${new Date(`${sprint.fin}T12:00`).toLocaleDateString('es-CL')} · ${sprint.diasHabiles} días hábiles (16-07 feriado)</p>
+      <p class="eyebrow">Sprint ${sprint.numero} · ${fecha(sprint.inicio)} al ${fecha(sprint.fin)} · ${sprint.diasHabiles} días hábiles (${sprint.feriados.map(diaMes).join(', ')} feriado)</p>
+      <p class="product-goal"><strong>Product Goal:</strong> ${esc(productGoal)}</p>
       <h1>Sprint Goal</h1>
       <p class="objetivo">${esc(sprint.objetivo)}</p>
       <ul class="medicion">${sprint.medicion.map((m) => `<li>${esc(m)}</li>`).join('')}</ul>
@@ -103,7 +96,7 @@ async function iniciar() {
       ${tile(`${capacidad.refinamiento} h`, 'Reservadas a refinamiento (10 %)')}
       ${tile(`${capacidad.planificada} h`, `Planificadas en ${tareas.length} tareas`)}
       ${tile(`${capacidad.colchon} h`, 'Colchón para imprevistos')}
-      ${tile('29 SP', 'Comprometidos y terminados (Done)')}
+      ${tile(`${puntos} SP`, 'Comprometidos y terminados (Done)')}
     </div>
 
     <div class="dos-columnas">
@@ -127,8 +120,8 @@ async function iniciar() {
       <h2>Tablero al cierre del Sprint</h2>
       <p class="tenue">Estado del Sprint Backlog el viernes 17-07-2026, después de la Sprint Review.</p>
       <div class="kanban">
-        <div class="columna"><h3>Siguiente (Sprint 2) <span>${SIGUIENTE.length}</span></h3>
-          ${SIGUIENTE.map(([id, t, sp]) => `<div class="tarjeta"><span class="etiqueta etiqueta--s2">${id}</span>${esc(t)}<div class="tarjeta__pie"><span>${sp} SP</span></div></div>`).join('')}</div>
+        <div class="columna"><h3>Siguiente (Sprint 2) <span>${siguienteSprint.length}</span></h3>
+          ${siguienteSprint.map((p) => `<div class="tarjeta"><span class="etiqueta etiqueta--s2">${esc(p.id)}</span>${esc(p.titulo)}<div class="tarjeta__pie"><span>${p.sp} SP</span></div></div>`).join('')}</div>
         <div class="columna"><h3>En curso <span>0</span></h3><p class="tenue" style="padding:4px">Sin trabajo en curso: todo lo comprometido cumple la DoD.</p></div>
         <div class="columna columna--hecho"><h3>Hecho (Done) <span>${grupos.length} ítems · ${tareas.length} tareas</span></h3><div class="grupos">${hecho}</div></div>
       </div>

@@ -51,10 +51,6 @@ export function eliminar(carrito, sku) {
   return { ok: true, carrito: { ...carrito, lineas: carrito.lineas.filter((l) => l.sku !== sku) } };
 }
 
-export function vaciar(carrito) {
-  return { ok: true, carrito: { ...carrito, lineas: [] } };
-}
-
 export function totales(carrito) {
   const total = carrito.lineas.reduce((suma, l) => suma + l.precio * l.cantidad, 0);
   const neto = Math.round(total / (1 + IVA));

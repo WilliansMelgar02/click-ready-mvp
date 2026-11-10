@@ -56,8 +56,8 @@ y pasa por el workflow [CI/CD](.github/workflows/ci-cd.yml):
    que define la variable de configuración `APP_ENV`, y se publica en GitHub Pages junto con los reportes.
 
 **Feature flags por entorno** en [`app/config/flags.json`](app/config/flags.json): `buzonSandbox`
-está activo en staging y apagado en producción; `checkout` y `franjasRetiro` siguen apagados en
-todos los entornos hasta el Sprint 2. Un flag desconocido o con un tipo incorrecto se ignora, y un
+está activo en staging y apagado en producción; `checkout` sigue apagado en todos
+los entornos hasta el Sprint 2. Un flag desconocido o con un tipo incorrecto se ignora, y un
 entorno desconocido se trata como producción.
 
 ## Estructura del repositorio
@@ -86,6 +86,7 @@ entorno desconocido se trata como producción.
 | `app/js/dominio/formato.js` | Formato de pesos chilenos y plurales |
 | `app/js/sprint.js` | Tablero del Sprint 1: objetivo, capacidad, burndown y Kanban |
 | `app/sprint.html` | Página del tablero |
+| `app/favicon.svg` | Ícono del sitio, compartido por ambas páginas |
 | `app/css/estilos.css` | Estilos del Incremento (adaptables a celular) |
 | `app/css/sprint.css` | Estilos del tablero |
 | `app/config/flags.json` | Valores de los feature flags por entorno |

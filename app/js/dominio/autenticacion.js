@@ -49,7 +49,7 @@ function bytesAleatorios(n) {
   return globalThis.crypto.getRandomValues(new Uint8Array(n));
 }
 
-export async function derivarClave(clave, salHex, iteraciones) {
+async function derivarClave(clave, salHex, iteraciones) {
   const sal = Uint8Array.from(salHex.match(/.{2}/g), (h) => parseInt(h, 16));
   const material = await globalThis.crypto.subtle.importKey('raw', codificador.encode(clave), 'PBKDF2', false, ['deriveBits']);
   const bits = await globalThis.crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: sal, iterations: iteraciones }, material, 256);

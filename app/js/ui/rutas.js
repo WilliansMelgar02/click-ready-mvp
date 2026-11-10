@@ -14,7 +14,7 @@ export function despuesDePintar(fn) {
   alPintar.push(fn);
 }
 
-export function rutaActual() {
+function rutaActual() {
   const [camino, consulta = ''] = location.hash.replace(/^#/, '').split('?');
   return { camino: camino || '/', params: new URLSearchParams(consulta) };
 }

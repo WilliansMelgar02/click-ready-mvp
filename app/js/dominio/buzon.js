@@ -23,8 +23,5 @@ export function crearBuzon({ almacen, reloj = () => Date.now() }) {
       const mensajes = leer();
       return para ? mensajes.filter((m) => m.para === para.toLowerCase()) : mensajes;
     },
-    vaciar() {
-      almacen.borrar(CLAVE);
-    },
   };
 }

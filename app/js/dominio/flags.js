@@ -1,11 +1,10 @@
-export const ENTORNOS = Object.freeze(['local', 'staging', 'produccion']);
+const ENTORNOS = Object.freeze(['local', 'staging', 'produccion']);
 
 export const FLAGS_POR_DEFECTO = Object.freeze({
   autocompletar: true,
   filtros: true,
   buzonSandbox: false,
   checkout: false,
-  franjasRetiro: false,
 });
 
 export function entornoValido(entorno) {
