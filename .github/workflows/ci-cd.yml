@@ -17,7 +17,7 @@ concurrency:
 jobs:
   unitarias:
     name: Pruebas unitarias + cobertura ≥ 70 %
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,7 +37,7 @@ jobs:
 
   e2e:
     name: Pruebas funcionales E2E (happy path)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: unitarias
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +58,7 @@ jobs:
   desplegar-staging:
     name: Desplegar a staging
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [unitarias, e2e]
     permissions:
       pages: write
